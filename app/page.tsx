@@ -3,9 +3,11 @@ import { Welcome } from '../components/Welcome/Welcome';
 import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import Flag from 'react-world-flags'
 import { useState, useEffect } from 'react';
-import { Box, TextInput, Center, Alert } from '@mantine/core';
+import { Box, TextInput, Center, Alert, Title } from '@mantine/core';
 import { Button } from '@mantine/core';
 import { Text } from '@mantine/core';
+import { IconInfoCircle }  from '@tabler/icons-react';
+import { COUNTRY_DATA } from './components/country_data';
 
 
 const COUNTRY_CODES = [
@@ -248,7 +250,7 @@ const COUNTRY_CODES = [
   "832",
   "833",
   "834",
-  "840",
+  "840",  
   "850",
   "854",
   "858",
@@ -258,47 +260,106 @@ const COUNTRY_CODES = [
   "882",
   "887",
   "894",];
+
+  
   
 const getRandomArbitrary = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
 }
 
 const getRandomCountry = () => {
- 
-
+  
   const country = Math.trunc(getRandomArbitrary(0,COUNTRY_CODES.length-1));
-  return COUNTRY_CODES[country];
+  return COUNTRY_DATA[country];
 }
+
+const validateAnswer = (userInput:string, country:any) => {
+  if (Number(userInput) == Number(country.numeric))
+    return true;
+  if (userInput.toLowerCase() == country.name.toLowerCase())
+    return true;
+  if (userInput.toLowerCase() == country.alpha2.toLowerCase())
+    return true;
+  if (userInput.toLowerCase() == country.alpha3.toLowerCase())
+    return true;
+  return false;
+}
+
 
 export default function HomePage() {
   const [country, setCountry] = useState(getRandomCountry());
   const [inputValue, setInputValue] = useState("");
+  const [message,setMessage] = useState('');
 
+  const icon = <IconInfoCircle />;
+
+  const delay = (ms:any) => new Promise(res => setTimeout(res, ms));
+  
+  useEffect( ()=>{ async () => {
+    await delay(2000);
+    setMessage("");
+}}, [inputValue])
+
+  const checkCountry = () => {
+    setCountry(getRandomCountry)
+    if(validateAnswer(inputValue, country)){
+     // alert("Correct");
+      setMessage('Correct')
+    }
+    else{ 
+     // alert("Wrong")
+      setMessage('Wrong')
+    }
+
+    
+    setInputValue("");
+  }
+
+  const handleMessage = (message : string)=>{
+    if(message == 'Correct'){
+      return <Alert variant="light" color="green" title="Correct" icon={icon}>
+      Way to go!
+    </Alert>
+    }
+    if(message == 'Wrong')
+      return <Alert variant="light" color="red" title="Wrong" icon={icon}>
+      That's not it...
+    </Alert>
+    return "";
+  }
   return (
     <>
-    <Center><Flag  code={country} height="200rem" /></Center>
+    <Center style={{margin: "40px"}}><Title order={1}>What country is this?</Title></Center>
+    <Center style={{margin: "20px"}}>
+      <Center maw={400} h={100}>
+        <Flag  code={country.numeric} height="150rem" />
+      </Center>
+      
+    </Center>
       <Center><Box>
           <Center maw={400} h={100}>
               <Box>
                 <TextInput 
                 size="xxl"
                 value={inputValue} 
-                placeholder={country}
-                
-                onChange={ (input) => setInputValue(input.target.value)}
+                placeholder={ country.numeric +": " + country.name }
+                onChange={ (input) => {
+                  setInputValue(input.target.value)
+                  setMessage("");
+                }}
+                onKeyDown={(key) => {
+                  if(key.code == 'Enter'){
+                    checkCountry();
+                  }
+                }}
                 />
                 </Box>
-      
+            
             <Button onClick={ () => {
-              setCountry(getRandomCountry)
-              if(Number(inputValue) == Number(country) )
-                alert("Correct");
-              else 
-                alert("Wrong")
-              
-              setInputValue("");
-            }}>OK</Button>
+             checkCountry();
+            }}>Send</Button>
           </Center>
+          <Box>{handleMessage(message)}</Box>
         </Box></Center>
     </>
       

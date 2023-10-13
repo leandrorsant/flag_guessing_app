@@ -1,4 +1,6 @@
-const COUNTRY_CODES = [
+import React from "react";
+
+export const COUNTRY_CODES = [
     "004",
     "008",
     "010",
@@ -248,5 +250,3 @@ const COUNTRY_CODES = [
     "882",
     "887",
     "894",];
-
-export default COUNTRY_CODES;

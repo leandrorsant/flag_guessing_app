@@ -1,12 +1,8 @@
 'use client'
-import { Welcome } from '../components/Welcome/Welcome';
-import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import Flag from 'react-world-flags'
 import { useState, useEffect } from 'react';
-import { Box, TextInput, Center, Alert } from '@mantine/core';
+import { TextInput } from '@mantine/core';
 import { Button } from '@mantine/core';
-import { Text } from '@mantine/core';
-
 
 const COUNTRY_CODES = [
   "004",
@@ -264,45 +260,36 @@ const getRandomArbitrary = (min: number, max: number) => {
 }
 
 const getRandomCountry = () => {
- 
-
   const country = Math.trunc(getRandomArbitrary(0,COUNTRY_CODES.length-1));
   return COUNTRY_CODES[country];
 }
 
-export default function HomePage() {
+export default function GuessingFlagGame() {
   const [country, setCountry] = useState(getRandomCountry());
   const [inputValue, setInputValue] = useState("");
 
   return (
     <>
-    <Center><Flag  code={country} height="200rem" /></Center>
-      <Center><Box>
-          <Center maw={400} h={100}>
-              <Box>
-                <TextInput 
-                size="xxl"
-                value={inputValue} 
-                placeholder={country}
-                
-                onChange={ (input) => setInputValue(input.target.value)}
-                />
-                </Box>
-      
-            <Button onClick={ () => {
-              setCountry(getRandomCountry)
-              if(Number(inputValue) == Number(country) )
-                alert("Correct");
-              else 
-                alert("Wrong")
-              
-              setInputValue("");
-            }}>OK</Button>
-          </Center>
-        </Box></Center>
+    <div style={{flex:1, alignContent:"center", alignItems:"center", justifyContent:"center"}}>
+      <Flag code={country} height="16" />
+        <TextInput 
+          size="sm"
+          value={inputValue} 
+          placeholder='Enter your guess'
+          
+          onChange={ (input) => setInputValue(input.target.value)}
+          />
+      <Button onClick={ () => {
+        setCountry(getRandomCountry)
+        if(Number(inputValue) == Number(country) )
+          alert("Correct");
+        else 
+          alert("Wrong")
+        
+        setInputValue("");
+      }}>OK</Button>
+      <p>{country}</p>
+    </div>
     </>
-      
-    
-    
   );
 }

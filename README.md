@@ -1,6 +1,6 @@
 # Flag guessing app
 This game displays random flags and the user has to guess which country it belongs to.
-Built with [Next.js](https://nextjs.org/) app router + [Mantine](https://mantine.dev/).
+Built with [Next.js](https://nextjs.org/) app router + [Mantine](https://mantine.dev/). Flags sourced from [react-world-flags](https://smucode.github.io/react-world-flags/).
 
 
 ## Screenshot:

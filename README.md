@@ -3,8 +3,8 @@ This game displays random flags and the user has to guess which country it belon
 Built with [Next.js](https://nextjs.org/) app router + [Mantine](https://mantine.dev/).
 
 
-## Features
-
+## Screenshot:
+![Screenshot](https://raw.githubusercontent.com/leandrorsant/flag_guessing_app/master/app/components/screenshots/Screenshot_20231015-100943-037.png)
 
 ## npm scripts
 

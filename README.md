@@ -11,5 +11,5 @@ npm run dev
 ```
 
 ## Screenshot:
-![Screenshot](https://raw.githubusercontent.com/leandrorsant/flag_guessing_app/master/app/components/screenshots/Screenshot_20231015-100943-037.png)
-
+<img src="https://raw.githubusercontent.com/leandrorsant/flag_guessing_app/master/app/components/screenshots/Screenshot_20231015-100943-037.png" width=30% height=30%>
+</div>

@@ -273,17 +273,7 @@ const getRandomCountry = () => {
   return COUNTRY_DATA[country];
 }
 
-const validateAnswer = (userInput:string, country:any) => {
-  if (Number(userInput) == Number(country.numeric))
-    return true;
-  if (userInput.toLowerCase() == country.name.toLowerCase())
-    return true;
-  if (userInput.toLowerCase() == country.alpha2.toLowerCase())
-    return true;
-  if (userInput.toLowerCase() == country.alpha3.toLowerCase())
-    return true;
-  return false;
-}
+
 
 
 export default function HomePage() {
@@ -295,24 +285,40 @@ export default function HomePage() {
 
   const delay = (ms:any) => new Promise(res => setTimeout(res, ms));
   
-  useEffect( ()=>{ async () => {
-    await delay(2000);
-    setMessage("");
-}}, [inputValue])
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+
+const validateAnswer = () => {
+  
+  if (Number(inputValue) == Number(country.numeric))
+    return true;
+  if (inputValue.toLowerCase() == country.name.toLowerCase())
+    return true;
+  if (inputValue.toLowerCase() == country.alpha2.toLowerCase())
+    return true;
+  if (inputValue.toLowerCase() == country.alpha3.toLowerCase())
+    return true;
+  return false;
+}
 
   const checkCountry = () => {
-    setCountry(getRandomCountry)
-    if(validateAnswer(inputValue, country)){
+    const answerCheck = validateAnswer()
+    if(answerCheck){
      // alert("Correct");
       setMessage('Correct')
+      setCountry(getRandomCountry())
     }
     else{ 
      // alert("Wrong")
       setMessage('Wrong')
     }
-
-    
     setInputValue("");
+    return answerCheck;
   }
 
   const handleMessage = (message : string)=>{
@@ -329,6 +335,7 @@ export default function HomePage() {
   }
   return (
     <>
+    {isClient && <Box>
     <Center style={{margin: "40px"}}><Title order={1}>What country is this?</Title></Center>
     <Center style={{margin: "20px"}}>
       <Center maw={400} h={100}>
@@ -339,6 +346,7 @@ export default function HomePage() {
       <Center><Box>
           <Center maw={400} h={100}>
               <Box>
+                
                 <TextInput 
                 size="xxl"
                 value={inputValue} 
@@ -346,8 +354,10 @@ export default function HomePage() {
                 onChange={ (input) => {
                   setInputValue(input.target.value)
                   setMessage("");
+                  
                 }}
                 onKeyDown={(key) => {
+
                   if(key.code == 'Enter'){
                     checkCountry();
                   }
@@ -356,11 +366,13 @@ export default function HomePage() {
                 </Box>
             
             <Button onClick={ () => {
+              alert(inputValue +": "+country.name)
              checkCountry();
             }}>Send</Button>
           </Center>
           <Box>{handleMessage(message)}</Box>
         </Box></Center>
+        </Box>}
     </>
       
     

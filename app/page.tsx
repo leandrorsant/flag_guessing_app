@@ -114,7 +114,6 @@ export default function HomePage() {
           ))}
           </Box>
         
-        
         <Center>
           <Box>
             <Box style={{width:"300px"}}>{handleMessage(message)}</Box>

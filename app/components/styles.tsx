@@ -3,15 +3,17 @@ const styles = {
                 content:'',
                 display: "block", 
                 width:"300px",
-                margin:"5px",
+                margin:"5px"
+                
         },
         btnWrong: {
                 content:'',
                 display: "block", 
                 width:"300px",
                 margin:"5px",
-                backgroundColor:"red"
+                backgroundColor:"red",
         }
+        
 }
 
 export default styles;
